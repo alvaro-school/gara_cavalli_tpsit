@@ -7,6 +7,17 @@ public class Cavallo extends Thread {
     private final Classifica classifica;
     private final Rand r;
 
+    private static final String[] EVENTI_STANCHEZZA = {
+        "e' stanco e si riposa",
+        "ha visto un quadrifoglio e si è fermato a mangiarlo",
+        "inciampa nelle sue stesse zampe e rotola per un po'",
+        "si ferma a fare un selfie con i fan",
+        "ha un crampo improvviso e urla nel vento",
+        "subisce la maledizione della partenza lenta e si deconcentra",
+        "si distrae a guardare gli altri cavalli sorpassarlo",
+        "decide che è un ottimo momento per un pisolino tattico"
+    };
+
     public Cavallo(String nome, long distanza, Classifica classifica, CountDownLatch startLatch, long seed) {
         this.nome = nome;
         this.distanza = distanza;
@@ -31,7 +42,12 @@ public class Cavallo extends Thread {
                 long rand = r.next();
                 if (Math.abs(rand % 8) == 1) {
                     long time = Math.abs(r.next() % 400) + 400;
-                    System.out.println("[" + nome + "] e' stanco e si riposa per " + time + "ms!");
+                    
+                    int indiceFrase = (int) Math.abs(r.next() % EVENTI_STANCHEZZA.length);
+                    String eventoDivertente = EVENTI_STANCHEZZA[indiceFrase];
+
+                    System.out.println("[" + nome + "] " + eventoDivertente + " per " + time + "ms!");
+                    
                     Thread.sleep(time);
                 }
             }
