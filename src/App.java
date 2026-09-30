@@ -46,11 +46,17 @@ public class App {
         }
 
         System.out.println("\nRISULTATI:");
-        Queue<String> clas = classifica.getResults();
-        String r = clas.poll();
+        Queue<Risultato> clas = classifica.getResults();
+        Risultato r = clas.poll();
         int i = 1;
         while (r != null) {
-            System.out.println("#"+i+" : " + r);
+            double msDelta = r.ns() / 1_000_000.0;
+
+            if (i == 1) {
+                System.out.println(String.format("#%d : %s (VINCITORE)", i, r.name()));
+            } else {
+                System.out.println(String.format("#%d : %s (+%.3f ms)", i, r.name(), msDelta));
+            }
             r = clas.poll();
             i++;
         }
